@@ -40,14 +40,11 @@ public class Cell implements Drawable{
 			else if(numNeighbors > 3) {
 				isAlive = false;
 		}
-			else { 
-				if (isAlive) {
-				if(numNeighbors == 3) {
-						isAlive = true;
-				}
-				
-			}
 		}
+		else { 
+			if(numNeighbors == 3) {
+					isAlive = true;
+			}
 		}
 	}
 	
@@ -65,8 +62,12 @@ public class Cell implements Drawable{
 	@Override
 	public void draw(Graphics g) {
 		if(isAlive) {
-		g.setCol or(Color.OPAQUE);
-		
+			g.setColor(Color.MAGENTA);
+		} else {
+			g.setColor(Color.DARK_GRAY);
+		}
+		g.fillRect(x, y, cellSize, cellSize);
+		g.drawRect(x, y, cellSize, cellSize);
 		
 		
 		
