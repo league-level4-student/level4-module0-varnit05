@@ -101,15 +101,19 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 7. iterate through cells and fill in the livingNeighbors array
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
-
+		for (int i = 0; i < array2d.length; i++) {
+			for (int j = 0; j < array2d[i].length; j++) {
+				livingNeighbors[i][j] = getLivingNeighbors(i,j);
+						
+		}
+		}	
 		// 8. check if each cell should live or die
 		for (int i = 0; i < array2d.length; i++) {
 			for (int j = 0; j < array2d[i].length; j++) {
-				livingNeighbors[i][j] = getLivingNeighbors(i, j);
-				array2d[i][j].liveOrDie(livingNeighbors.length);
-				repaint();
+				array2d[i][j].liveOrDie(livingNeighbors[i][j]);
+				
 			}
-
+			repaint();
 		}
 	}
 
@@ -123,45 +127,48 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 			if (array2d[x-1][y-1].isAlive) {
 				LivingNeighbors++;
 			}
-			if (x>0&&y>0) {
-				if (array2d[x-1][y-1].isAlive) {
+		}
+			if (x>0) {
+				if (array2d[x-1][y].isAlive) {
 					LivingNeighbors++;
 				}
+			}
 
-				if (x>0&&y>0) {
-					if (array2d[x-1][y-1].isAlive) {
+				if (x>0&&y<array2d[x].length-1) {
+					if (array2d[x-1][y+1].isAlive) {
 						LivingNeighbors++;
 					}
-
-					if (x>0&&y>0) {
-						if (array2d[x-1][y-1].isAlive) {
+				}
+					if (y>0) {
+						if (array2d[x][y-1].isAlive) {
 							LivingNeighbors++;
 						}
-
-						if (x>0&&y>0) {
-							if (array2d[x-1][y-1].isAlive) {
+					}
+						if (y<array2d[x].length-1) {
+							if (array2d[x][y+1].isAlive) {
 								LivingNeighbors++;
 							}
-							if (x>0&&y>0) {
-								if (array2d[x-1][y-1].isAlive) {
+						}
+							if (x<array2d.length-1&&y>0) {
+								if (array2d[x+1][y-1].isAlive) {
 									LivingNeighbors++;
 								}
-
-								if () {
-									if () {
+							}
+								if (x<array2d.length-1) {
+									if (array2d[x+1][y].isAlive) {
 										LivingNeighbors++;
 									}
-
-									if () {
-										if () {
+								}
+									if (x<array2d.length-1&&y<array2d[x].length-1) {
+										if (array2d[x+1][y+1].isAlive) {
 											LivingNeighbors++;
 										}
-
+									}
 										
-		}
+		
 		return 0;
-	}
-
+								}
+							
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -185,7 +192,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// which cell is clicked. Then toggle
 		// the isAlive variable for that cell.
 		int cellX = e.getX() / cellSize;
-		int cellY = e.getX() / cellSize;
+		int cellY = e.getY() / cellSize ;
 		array2d[cellX][cellY].isAlive = true;
 		System.out.println(array2d[cellX][cellY].isAlive = true);
 
@@ -200,6 +207,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		step();
 	}
 }
