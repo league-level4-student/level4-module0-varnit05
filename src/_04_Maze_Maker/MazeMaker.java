@@ -23,10 +23,10 @@ public class MazeMaker{
 		
 		//4. select a random cell to start
 		Random r1 = new Random();
-		Random r2 = new Random();
-		r1.nextInt(width);
-		r2.nextInt(height);
-		Cell c = new Cell(width, height);
+
+		int x = r1.nextInt(width);
+		int y = r1.nextInt(height);
+		Cell c = maze.getCell(x, y);
 		
 		//5. call selectNextPath method with the randomly selected cell
 		selectNextPath(c);
@@ -44,10 +44,10 @@ public class MazeMaker{
 	//C1. select one at random.
 		if (x.size()>0) {
 			Random r = new Random();
-			Cell cell  = x.get(r.nextInt(x.size()-1));
+			Cell cell  = x.get(r.nextInt(x.size()+1)-1);
 			uncheckedCells.push(cell);
-			cell=(currentCell);
-			cell.hasBeenVisited();
+			currentCell = cell;
+			cell.setBeenVisited(true);
 				selectNextPath(currentCell);
 		}
 		else {
@@ -65,7 +65,7 @@ public class MazeMaker{
 	
 				
 			//C2. push it to the stackc1.setNorthWall(false);
-	c2.setSouthWall(false);
+
 			//C3. remove the wall between the two cells  
 			//C4. make the new cell the current cell and mark it as visited
 		
@@ -92,6 +92,7 @@ public class MazeMaker{
 	//7. Complete the remove walls method.
 	//   This method will check if c1 and c2 are adjacent.
 	//   If they are, the walls between them are removed.
+	
 	private static void removeWalls(Cell c1, Cell c2 ) {
 		if(c1.getX() == c2.getX()) {
 			if(c1.getY()>c2.getY()) {
@@ -113,12 +114,31 @@ public class MazeMaker{
 				c1.setNorthWall(false);
 				c2.setSouthWall(false);
 			}
+		}
 	}
-	}
+
 	//8. Complete the getUnvisitedNeighbors method
 	//   Any unvisited neighbor of the passed in cell gets added
 	//   to the ArrayList
 	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {
-		return null;
-	}
+		ArrayList<Cell> x = new ArrayList<Cell>();
+		if (c.getY()>0) {
+			x.add(maze.getCell(c.getX(), c.getY()-1));
+		}
+		if (c.getX()<x.size()-1) {
+			x.add(maze.getCell(c.getX()+1, c.getY()));
+		}
+		if (c.getX()>0) {
+			x.add(maze.getCell(c.getX()-1, c.getY()));
+		}
+		if (c.getY()<x.size()-1) {
+			x.add(maze.getCell(c.getX(), c.getY()+1));
+			
+		}
+		
+		return x;
+	
+
 }
+}
+

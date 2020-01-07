@@ -19,7 +19,7 @@ public class Maze {
 		//   using i and j as the location
 		for(int i = 0; i < array2d.length; i++) {
 			for(int j = 0; j < array2d[i].length; j++) {
-		array2d[i][j] = new Cell(j, j);
+				array2d[i][j] = new Cell(i, j);
 	}
 		}
 	}
